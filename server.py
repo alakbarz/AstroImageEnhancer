@@ -11,4 +11,5 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 handler_object = MyHttpRequestHandler
 server = socketserver.TCPServer(("", PORT), handler_object)
+print("Started server on port:", PORT)
 server.serve_forever()
