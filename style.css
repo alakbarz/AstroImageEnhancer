@@ -1,0 +1,138 @@
+:root {
+  --accent: #294eca;
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Inter";
+  color: #fff;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  height: 100vh;
+}
+
+.grid-left {
+  background-color: #000;
+}
+
+.grid-right {
+  background-color: #202020;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  background-color: #bbb;
+  border-radius: 5px;
+  position: absolute;
+  top: 20px;
+  left: 15px;
+}
+
+.nav a {
+  background-color: var(--accent);
+  padding: 5px 10px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+a {
+  display: inline-block;
+}
+
+.nav a:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.nav a:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.image-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  max-width: 95%;
+  max-height: 95vh;
+}
+
+.controls-header {
+  background-color: #101010;
+  padding: 15px;
+}
+
+.controls-wrapper {
+  padding: 15px;
+  overflow-y: auto;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+h2, h3 {
+  margin: 25px 0 0 0;
+}
+
+p.subtitle {
+  font-style: italic;
+  color: #bbb;
+  margin-bottom: 5px;
+}
+
+.no-top-margin {
+  margin-top: 0;
+}
+
+/* Slider/range code stolen from W3Schools :) */
+
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 2px; /* Specified height */
+  background: var(--accent); /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 20px; /* Set a specific slider handle width */
+  height: 20px; /* Slider handle height */
+  background: #fff; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 50%;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px; /* Set a specific slider handle width */
+  height: 20px; /* Slider handle height */
+  background: #fff; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 50%;
+}
