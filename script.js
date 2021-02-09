@@ -13,47 +13,60 @@ contrast.oninput = function() {
 }
 
 var denoise = document.getElementById("sliderDenoise");
+var denoiseValue = denoise.value
 var outputDenoise = document.getElementById("spanDenoise");
 outputDenoise.innerHTML = "None";
 denoise.oninput = function() {
-  outputDenoise.innerHTML = this.value + "%";
+  denoiseValue = this.value;
+  outputDenoise.innerHTML = denoiseValue + "%";
 }
 
 var star = document.getElementById("sliderStar");
 var outputStar = document.getElementById("spanStar");
 outputStar.innerHTML = "None";
 star.oninput = function() {
+  starValue = this.value;
   outputStar.innerHTML = this.value + "%";
 }
 
-var denoiseToggled = false
-buttonDenoise = document.getElementById("buttonDenoise")
+var denoiseToggled = false;
+var denoiseValue = 0;
+buttonDenoise = document.getElementById("buttonDenoise");
 
 function toggleDenoise() {
   if (denoiseToggled != true) {
-    outputDenoise.innerHTML = "1%"
+    denoise.value = denoiseValue
+    outputDenoise.innerHTML = denoiseValue + "%"
+    denoise.disabled = false;
     denoiseToggled = true
     buttonDenoise.style.backgroundColor = "#4CAF50"
     buttonDenoise.innerHTML = "Disable Denoising"
   } else {
+    denoise.value = 0
     outputDenoise.innerHTML = "None"
+    denoise.disabled = true;
     denoiseToggled = false
     buttonDenoise.style.backgroundColor = "#bbb"
     buttonDenoise.innerHTML = "Enable Denoising"
   }
 }
 
-var starToggled = false
-buttonStar = document.getElementById("buttonStar")
+var starToggled = false;
+var starValue = 0;
+buttonStar = document.getElementById("buttonStar");
 
 function toggleStar() {
   if (starToggled != true) {
-    outputStar.innerHTML = "1%"
+    star.value = starValue
+    outputStar.innerHTML = starValue + "%"
+    star.disabled = false;
     starToggled = true
     buttonStar.style.backgroundColor = "#4CAF50"
     buttonStar.innerHTML = "Disable Enhancement"
   } else {
+    star.value = 0
     outputStar.innerHTML = "None"
+    star.disabled = true;
     starToggled = false
     buttonStar.style.backgroundColor = "#bbb"
     buttonStar.innerHTML = "Enable Enhancement"
