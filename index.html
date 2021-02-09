@@ -22,31 +22,50 @@
         <h1>Controls</h1>
       </div>
       <div class="controls-wrapper">
-        <h2 class="no-top-margin">Basic Adjustments</h2>
-        <p class="subtitle">Some text explaining what the following settings do</p>
+        <div class="controls-section">
+          <h2 class="no-top-margin">Basic Adjustments</h2>
+          <p class="subtitle">Some text explaining what the following settings do</p>
 
-        <h3>Brightness</h3>
-        <div class="slidecontainer">
-          <input type="range" min="-100" max="100" value="0" class="slider" id="myRange">
+          <h3>Brightness &middot; <span id="spanBrightness">0</span></h3>
+          <div class="slidecontainer">
+            <input type="range" min="-100" max="100" value="0" class="slider" id="sliderBrightness">
+          </div>
+
+          <h3>Contrast &middot; <span id="spanContrast">0</span></h3>
+          <div class="slidecontainer">
+            <input type="range" min="-100" max="100" value="0" class="slider" id="sliderContrast">
+          </div>
         </div>
 
-        <h3>Contrast</h3>
-        <div class="slidecontainer">
-          <input type="range" min="-100" max="100" value="0" class="slider" id="myRange">
+        <hr>
+
+        <div class="controls-section">
+          <h2>Denoising</h2>
+          <p class="subtitle">Applies smoothing to reduce noise at the cost of losing detail in the image</p>
+          <button type="button" id="buttonDenoise" onclick="toggleDenoise()">Enable Denoising</button>
+
+          <h3>Denoising Strength &middot; <span id="spanDenoise">None</span></h3>
+          <div class="slidecontainer">
+            <input type="range" min="1" max="100" value="0" class="slider" id="sliderDenoise">
+          </div>
         </div>
 
-        <h2>Denoising</h2>
-        <p class="subtitle">Applies smoothing to reduce noise at the cost of losing detail in the image</p>
-        <button type="button">Enable Denoising</button>
+        <hr>
 
-        <h3>Denoising Amount</h3>
-        <div class="slidecontainer">
-          <input type="range" min="1" max="100" value="0" class="slider" id="myRange">
+        <div class="controls-section">
+          <h2>Star Enhancement</h2>
+          <p class="subtitle">Detects stars in the image and increases their brightness</p>
+          <button type="button" id="buttonStar" onclick="toggleStar()">Enable Enhancement</button>
+
+          <h3>Enhancement Strength &middot; <span id="spanStar">None</span></h3>
+          <div class="slidecontainer">
+            <input type="range" min="1" max="100" value="0" class="slider" id="sliderStar">
+          </div>
         </div>
-
       </div>
     </div>
   </div>
+  <script src="script.js"></script>
 </body>
 
 </html>
