@@ -1,20 +1,19 @@
-<!DOCTYPE html>
 <html>
 
 <head>
-  <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+  <title>AIE</title>
+  <link rel="stylesheet" type="text/css" href="/static/style.css" media="screen" />
 </head>
 
 <body>
   <div class="nav">
-    <a href="">Open</a>
-    <a href="">Save</a>
-    <a href="">About</a>
+    <label class="nav-button" for="open-image">Open</a>
+    <input type="file" id="open-image" name="open-image" accept="image/jpeg">
   </div>
   <div class="grid">
     <div class="grid-left">
       <div class="image-wrapper">
-        <img class="image" src="capture2.jpg" alt="">
+        <img class="image" src="/static/image/dpc3-620001238.jpg" alt="">
       </div>
     </div>
     <div class="grid-right">
@@ -65,7 +64,7 @@
       </div>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script src="/static/script.js"></script>
 </body>
 
 </html>
