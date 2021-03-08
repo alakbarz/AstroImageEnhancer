@@ -6,10 +6,6 @@ import cv2
 import numpy as np
 import shutil
 import datetime
-import math
-
-# import dilate
-# import brightness
 
 app = Flask(__name__)
 
@@ -106,10 +102,6 @@ def revert():
     shutil.copyfile(
         f"static/uploads/backup-{Image.filename}", f"static/uploads/{Image.filename}")
     return redirect(url_for("upload"))
-
-# @app.route("/<title>")
-# def hello(title):
-#     return render_template("index.html", title=title)
 
 
 if __name__ == "__main__":
