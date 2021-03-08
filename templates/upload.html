@@ -1,0 +1,25 @@
+<html>
+
+<head>
+  <title>AIE</title>
+  <link rel="stylesheet" type="text/css" href="/static/style.css" media="screen" />
+</head>
+
+<body class="upload">
+  <div class="form">
+    <form action="/edit" method="POST" enctype="multipart/form-data">
+      <h1>Upload your image</h1>
+      <br><br>
+      <div class="custom-file">
+        <input type="file" class="button" name="image" id="image">
+      </div>
+      <br>
+      <button type="submit" class="button">Upload</button>
+    </form>
+  </div>
+
+  <script src="{{url_for('static', filename='script.js')}}"></script>
+  <script type=text/javascript src="{{url_for('static', filename='jquery-3.5.1.js')}}"></script>
+</body>
+
+</html>

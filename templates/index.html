@@ -7,64 +7,91 @@
 
 <body>
   <div class="nav">
-    <label class="nav-button" for="open-image">Open</a>
-    <input type="file" id="open-image" name="open-image" accept="image/jpeg">
+    <a href="/" class="button">Upload</a>
   </div>
   <div class="grid">
     <div class="grid-left">
       <div class="image-wrapper">
-        <img class="image" src="/static/image/dpc3-620001238.jpg" alt="">
+        <div class="processing" id="processing">
+          <h1>Processing...</h1>
+        </div>
+        <input type="checkbox" id="zoomCheck">
+        <label for="zoomCheck">
+          <img class="image" src="/static/uploads/{{image}}?updated={{dateTime}}" alt="">
+        </label>
       </div>
     </div>
     <div class="grid-right">
       <div class="controls-header">
         <h1>Controls</h1>
+        <div>
+          <button type="button" class="button" id="buttonRevert" onclick="revert()">Revert</button>
+          <button type="button" class="button" id="buttonProcess" onclick="process()">Update</button>
+        </div>
       </div>
       <div class="controls-wrapper">
-        <div class="controls-section">
-          <h2 class="no-top-margin">Basic Adjustments</h2>
-          <p class="subtitle">Some text explaining what the following settings do</p>
-
-          <h3>Brightness &middot; <span id="spanBrightness">0</span></h3>
-          <div class="slidecontainer">
-            <input type="range" min="-100" max="100" value="0" class="slider" id="sliderBrightness">
-          </div>
-
-          <h3>Contrast &middot; <span id="spanContrast">0</span></h3>
-          <div class="slidecontainer">
-            <input type="range" min="-100" max="100" value="0" class="slider" id="sliderContrast">
-          </div>
-        </div>
+        <h2 class="no-top-margin">Getting Started</h2>
+        <p class="subtitle">Make some changes, then click "Update" to see the results. If you don't like it, click "Revert" to delete all changes.</p>
+        <br>
+        <p class="subtitle">All actions are additive i.e. increasing brightness by 50% then doing 60% will not increase it by 10%</p>
+        <br>
+        <p class="subtitle">If you don't change a value between pressing "Update", then changes aren't calculated.</p>
+        <br>
+        <p class="subtitle">Some changes may take a few seconds to process.</p>
 
         <hr>
 
-        <div class="controls-section">
-          <h2>Denoising</h2>
-          <p class="subtitle">Applies smoothing to reduce noise at the cost of losing detail in the image</p>
-          <button type="button" id="buttonDenoise" onclick="toggleDenoise()">Enable Denoising</button>
+        <form name="controlsForm" id="controlsForm" action="/process" method="POST">
+          <input type="hidden" name="revert" value="{{revert}}" id="revert">
+          <div class="controls-section">
+            <h2 class="no-top-margin">Basic Adjustments</h2>
+            <p class="subtitle">Some text explaining what the following settings do</p>
 
-          <h3>Denoising Strength &middot; <span id="spanDenoise">None</span></h3>
-          <div class="slidecontainer">
-            <input type="range" min="1" max="100" value="0" class="slider" id="sliderDenoise" disabled="true">
+            <h3>Brightness &middot; <span id="spanBrightness">{{brightness}}%</span></h3>
+            <div class="slidecontainer">
+              <input type="range" name="sliderBrightness" min="-100" max="100" value="{{brightness}}" class="slider"
+                id="sliderBrightness">
+            </div>
+
+            <h3>Contrast &middot; <span id="spanContrast">{{contrast}}%</span></h3>
+            <div class="slidecontainer">
+              <input type="range" name="sliderContrast" min="-100" max="100" value="{{contrast}}" class="slider"
+                id="sliderContrast">
+            </div>
           </div>
-        </div>
 
-        <hr>
+          <hr>
 
-        <div class="controls-section">
-          <h2>Star Enhancement</h2>
-          <p class="subtitle">Detects stars in the image and increases their brightness</p>
-          <button type="button" id="buttonStar" onclick="toggleStar()">Enable Enhancement</button>
+          <div class="controls-section">
+            <h2>Denoising</h2>
+            <p class="subtitle">Applies smoothing to reduce noise at the cost of losing detail in the image (may take a
+              while)</p>
 
-          <h3>Enhancement Strength &middot; <span id="spanStar">None</span></h3>
-          <div class="slidecontainer">
-            <input type="range" min="1" max="100" value="0" class="slider" id="sliderStar" disabled="true">
+            <h3>Denoising Strength &middot; <span id="spanDenoise">{{denoise}}%</span></h3>
+            <div class="slidecontainer">
+              <input type="range" name="sliderDenoise" min="0" max="100" value="{{denoise}}" class="slider"
+                id="sliderDenoise">
+            </div>
           </div>
-        </div>
+
+          <hr>
+
+          <div class="controls-section">
+            <h2>Star Enhancement</h2>
+            <p class="subtitle">Detects stars in the image and increases their brightness</p>
+
+            <h3>Enhancement Strength &middot; <span id="spanStar">{{enhance}}</span></h3>
+            <div class="slidecontainer">
+              <input type="range" name="sliderStar" min="0" max="5" value="{{enhance}}" class="slider" id="sliderStar">
+            </div>
+          </div>
+          <br><br><br><br><br><br><br><br><br><br><br>
+        </form>
       </div>
     </div>
   </div>
-  <script src="/static/script.js"></script>
+  <script src="{{url_for('static', filename='script.js')}}"></script>
+  <script type=text/javascript src="{{url_for('static', filename='jquery-3.5.1.js')}}"></script>
 </body>
 
 </html>
