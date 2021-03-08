@@ -23,6 +23,10 @@ class Image():
 def index():
     return render_template("upload.html")
 
+@app.route("/stack", methods=["GET", "POST"])
+def stack():
+    print("Woohoo!")
+
 
 @app.route("/edit", methods=["GET", "POST"])
 def upload():

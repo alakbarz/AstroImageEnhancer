@@ -8,13 +8,22 @@
 <body class="upload">
   <div class="form">
     <form action="/edit" method="POST" enctype="multipart/form-data">
-      <h1>Upload your image</h1>
-      <br><br>
+      <img src="/static/uploads/heavenSent.jpg" id="uploads-img" alt="">
+      <h1 class="margin-top">Upload your image</h1>
       <div class="custom-file">
         <input type="file" class="button" name="image" id="image">
       </div>
       <br>
-      <button type="submit" class="button">Upload</button>
+      <button id="upload-button" type="submit" class="button">Upload</button>
+    </form>
+
+    <form action="/edit" method="POST" enctype="multipart/form-data">
+      <img src="/static/uploads/heavenSent.jpg" id="uploads-img" alt="">
+      <h1 class="margin-top">Stack images</h1>
+      <div class="custom-file">
+        <input type="file" class="button" name="image" id="image">
+      </div>
+      <button id="upload-button" type="submit" class="button">Upload</button>
     </form>
   </div>
 
