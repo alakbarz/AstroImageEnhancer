@@ -60,6 +60,8 @@ body {
   background-color: #101010;
   overflow: hidden;
   box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
 }
 
 .grid {
@@ -128,14 +130,16 @@ input[type=file] {
 }
 
 #uploads-img {
-  max-width: 50%;
-  max-height: 50%;
+  width: 25%;
   border-radius: 5px;
-  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
 #upload-button, .custom-file {
   margin-top: 15px;
+}
+
+#upload-button {
+  width: 25%;
 }
 
 .image {

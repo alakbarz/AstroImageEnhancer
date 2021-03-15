@@ -7,6 +7,13 @@ function process() {
   form.submit()
 }
 
+var stackForm = document.getElementById("stackForm")
+
+function upload() {
+  processing.style.opacity = 1;
+  stackForm.submit()
+}
+
 var revertValue = document.getElementById("revert");
 
 function revert() {

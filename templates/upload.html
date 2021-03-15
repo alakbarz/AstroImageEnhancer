@@ -1,29 +1,36 @@
 <html>
 
 <head>
-  <title>AIE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Astrophotography image enhancement honours project">
+  <title>Astrophotography Image Enhancement</title>
   <link rel="stylesheet" type="text/css" href="/static/style.css" media="screen" />
 </head>
 
 <body class="upload">
+  <div class="processing" id="processing">
+    <h1>Processing...</h1>
+  </div>
   <div class="form">
     <form action="/edit" method="POST" enctype="multipart/form-data">
-      <img src="/static/uploads/heavenSent.jpg" id="uploads-img" alt="">
+      <img src="/static/images/photo.svg" id="uploads-img" alt="">
       <h1 class="margin-top">Upload your image</h1>
+      <p>Edit a single image</p>
       <div class="custom-file">
-        <input type="file" class="button" name="image" id="image">
+        <input type="file" class="button" name="image" id="image" accept="image/jpeg, image/png">
       </div>
       <br>
       <button id="upload-button" type="submit" class="button">Upload</button>
     </form>
 
-    <form action="/edit" method="POST" enctype="multipart/form-data">
-      <img src="/static/uploads/heavenSent.jpg" id="uploads-img" alt="">
+    <form id="stackForm" action="/stack" method="POST" enctype="multipart/form-data">
+      <img src="/static/images/stack.svg" id="uploads-img" alt="">
       <h1 class="margin-top">Stack images</h1>
+      <p>Automatically align and stack multiple images</p>
       <div class="custom-file">
-        <input type="file" class="button" name="image" id="image">
+        <input type="file" class="button" name="image" id="image" multiple="" accept="image/jpeg">
       </div>
-      <button id="upload-button" type="submit" class="button">Upload</button>
+      <button id="upload-button" type="submit" onclick="upload()" class="button">Upload</button>
     </form>
   </div>
 
