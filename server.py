@@ -17,7 +17,12 @@ class Image():
     contrast = "0"
     denoise = "0"
     enhance = "0"
+    brightnessBackup = "0"
+    contrastBackup = "0"
+    denoiseBackup = "0"
+    enhanceBackup = "0"
     revert = "0"
+    undo = False
 
 
 @app.route("/")
@@ -88,18 +93,24 @@ def upload():
             f"static/uploads/{Image.filename}", f"static/uploads/backup-{Image.filename}")
         return render_template("index.html", revert=Image.revert, image=Image.filename, brightness=Image.brightness, contrast=Image.contrast, denoise=Image.denoise, enhance=Image.enhance)
     else:
-        Image.brightness = "0"
-        Image.contrast = "0"
-        Image.denoise = "0"
-        Image.enhance = "0"
-        return render_template("index.html", revert=Image.revert, image=Image.filename, brightness=Image.brightness, contrast=Image.contrast, denoise=Image.denoise, enhance=Image.enhance)
+        now = datetime.datetime.now()
+        timestamp = now.strftime("%d-%m-%Y-%H%M%S")
+        return render_template("index.html", dateTime=timestamp, revert=Image.revert, image=Image.filename, brightness=Image.brightness, contrast=Image.contrast, denoise=Image.denoise, enhance=Image.enhance)
 
 
 @app.route("/process", methods=["GET", "POST"])
 def process():
     if request.method == "POST":
 
-        img = cv2.imread(f"static/uploads/{Image.filename}")
+        Image.brightnessBackup = Image.brightness
+        Image.contrastBackup = Image.contrast
+        Image.denoiseBackup = Image.denoise
+        Image.enhanceBackup = Image.enhance
+        
+        shutil.copyfile(f"static/uploads/{Image.filename}", f"static/uploads/undo-{Image.filename}")
+        shutil.copyfile(f"static/uploads/backup-{Image.filename}", f"static/uploads/original-{Image.filename}")
+
+        img = cv2.imread(f"static/uploads/original-{Image.filename}")
         dateTime = datetime.datetime.now()
 
         if request.form["sliderBrightness"] != Image.brightness:
@@ -117,9 +128,9 @@ def process():
         if request.form["sliderDenoise"] == "0":
             pass
         elif request.form["sliderDenoise"] != Image.denoise:
-            Image.denoise = request.form["sliderDenoise"]
+            Image.denoise = int(request.form["sliderDenoise"])
             output = None               # Do not output image
-            strength = 10               # Denoising filter strength
+            strength = Image.denoise    # Denoising filter strength
             strengthColour = strength   # "Same as h, but for color images only"
             templateWindowSize = 7      # "should be odd. (recommended 7)"
             searchWindowSize = 21       # "should be odd. (recommended 21)"
@@ -141,16 +152,26 @@ def process():
         return render_template("index.html", dateTime=dateTime, image=Image.filename, brightness=Image.brightness, contrast=Image.contrast, denoise=Image.denoise, enhance=Image.enhance)
 
     if request.method == "GET":
-        shutil.copyfile(
-            f"static/uploads/backup-{Image.filename}", f"static/uploads/{Image.filename}")
-        return "Success"
+        shutil.copyfile(f"static/uploads/backup-{Image.filename}", f"static/uploads/{Image.filename}")
+        print("Reverted")
+        Image.brightness = "0"
+        Image.contrast = "0"
+        Image.denoise = "0"
+        Image.enhance = "0"
+        return "Sucess"
 
 
-@app.route("/revert")
-def revert():
-    shutil.copyfile(
-        f"static/uploads/backup-{Image.filename}", f"static/uploads/{Image.filename}")
-    return redirect(url_for("upload"))
+@app.route("/undo")
+def undo():
+    now = datetime.datetime.now()
+    timestamp = now.strftime("%d-%m-%Y-%H%M%S")
+    Image.brightness = Image.brightnessBackup
+    Image.contrast = Image.contrastBackup
+    Image.denoise = Image.denoiseBackup
+    Image.enhance = Image.enhanceBackup
+    shutil.copyfile(f"static/uploads/undo-{Image.filename}", f"static/uploads/{Image.filename}")
+    print("Undid")
+    return render_template("index.html", dateTime=timestamp, revert=Image.revert, image=Image.filename, brightness=Image.brightness, contrast=Image.contrast, denoise=Image.denoise, enhance=Image.enhance)
 
 
 if __name__ == "__main__":

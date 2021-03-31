@@ -25,19 +25,16 @@
     </div>
     <div class="grid-right">
       <div class="controls-header">
-        <h1>Controls</h1>
+        <!-- <h1>Controls</h1> -->
         <div>
           <button type="button" class="button" id="buttonRevert" onclick="revert()">Revert</button>
-          <button type="button" class="button" id="buttonProcess" onclick="process()">Update</button>
+          <button type="button" class="button" id="buttonUndo" onclick="undo()">Undo</button>
+          <button type="button" class="button" id="buttonProcess" onclick="process()">Process</button>
         </div>
       </div>
       <div class="controls-wrapper">
         <h2 class="no-top-margin">Getting Started</h2>
         <p class="subtitle">Make some changes, then click "Update" to see the results. If you don't like it, click "Revert" to delete all changes.</p>
-        <br>
-        <p class="subtitle">All actions are additive i.e. increasing brightness by 49% then 51% is the same as doig 100%.</p>
-        <br>
-        <p class="subtitle">If you don't change a value between pressing "Update", then changes aren't calculated.</p>
         <br>
         <p class="subtitle">Some changes may take a few seconds to process.</p>
 
@@ -69,9 +66,9 @@
             <p class="subtitle">Applies smoothing to reduce noise at the cost of losing detail in the image (may take a
               while)</p>
 
-            <h3>Denoising Strength &middot; <span id="spanDenoise">{{denoise}}%</span></h3>
+            <h3>Denoising Strength &middot; <span id="spanDenoise">{{denoise}}</span></h3>
             <div class="slidecontainer">
-              <input type="range" name="sliderDenoise" min="0" max="100" value="{{denoise}}" class="slider"
+              <input type="range" name="sliderDenoise" min="0" max="20" value="{{denoise}}" class="slider"
                 id="sliderDenoise">
             </div>
           </div>

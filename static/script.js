@@ -29,6 +29,19 @@ function revert() {
   xhttp.send();
 }
 
+function undo() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET", "/undo", true)
+  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = this.responseText;
+      window.location.replace("/edit");
+    }
+  };
+  xhttp.send();
+}
+
 var brightness = document.getElementById("sliderBrightness");
 var outputBrightness = document.getElementById("spanBrightness");
 brightness.oninput = function () {
@@ -46,7 +59,7 @@ var denoiseValue = denoise.value
 var outputDenoise = document.getElementById("spanDenoise");
 denoise.oninput = function () {
   denoiseValue = this.value;
-  outputDenoise.innerHTML = denoiseValue + "%";
+  outputDenoise.innerHTML = denoiseValue;
 }
 
 var star = document.getElementById("sliderStar");

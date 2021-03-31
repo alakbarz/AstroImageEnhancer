@@ -52,10 +52,13 @@
   to   { opacity: 1; }
 }
 
+* {
+  font-family: "Inter", sans-serif;
+}
+
 body {
   margin: 0;
   box-sizing: border-box;
-  font-family: "Inter";
   color: #fff;
   background-color: #101010;
   overflow: hidden;
@@ -249,17 +252,23 @@ hr {
   filter: brightness(1.25);
 }
 
-#buttonProcess {
-  margin-left: 10px;
+#buttonProcess, #buttonUndo, #buttonRevert {
+  margin: 0 5px;
 }
 
 #buttonRevert {
   background-color: #b71c1c;
+  margin-left: 0;
+}
+
+#buttonProcess {
+  background-color: #33691E;
+  margin-right: 0;
 }
 
 .controls-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .slidecontainer {
