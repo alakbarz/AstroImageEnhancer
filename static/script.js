@@ -3,7 +3,8 @@ var form = document.getElementById("controlsForm");
 var processing = document.getElementById("processing")
 
 function process() {
-  processing.style.opacity = 1; 
+  processing.style.visibility = "visible"
+  processing.style.opacity = 1;
   form.submit()
 }
 
@@ -51,7 +52,7 @@ brightness.oninput = function () {
 var contrast = document.getElementById("sliderContrast");
 var outputContrast = document.getElementById("spanContrast");
 contrast.oninput = function () {
-  outputContrast.innerHTML = this.value + "%";
+  outputContrast.innerHTML = this.value;
 }
 
 var denoise = document.getElementById("sliderDenoise");

@@ -117,12 +117,17 @@ input[type=file] {
   align-items: center;
 }
 
+.form {
+  width: 100%;
+}
+
 .form form {
   display: flex;
   flex-direction: column;
   align-content: center;
   align-items: center;
-  width: 50%;
+  margin: 0 100px;
+  /* width: 50%; */
 }
 
 .upload {
@@ -176,6 +181,7 @@ input[type=checkbox]:checked ~ label > img {
   border-radius: 5px;
   position: absolute;
   display: flex;
+  visibility: hidden;
   opacity: 0;
   z-index: 10;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);

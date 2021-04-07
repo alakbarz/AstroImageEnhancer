@@ -37,6 +37,8 @@
         <p class="subtitle">Make some changes, then click "Update" to see the results. If you don't like it, click "Revert" to delete all changes.</p>
         <br>
         <p class="subtitle">Some changes may take a few seconds to process.</p>
+        <br>
+        <p class="subtitle">Right-click on the image and "Save image as..." to download the processed version</p>
 
         <hr>
 
@@ -52,9 +54,9 @@
                 id="sliderBrightness">
             </div>
 
-            <h3>Contrast &middot; <span id="spanContrast">{{contrast}}%</span></h3>
+            <h3>Contrast &middot; <span id="spanContrast">{{contrast}}</span></h3>
             <div class="slidecontainer">
-              <input type="range" name="sliderContrast" min="-100" max="100" value="{{contrast}}" class="slider"
+              <input type="range" name="sliderContrast" min="0.0" max="5.0" step="0.1" value="{{contrast}}" class="slider"
                 id="sliderContrast">
             </div>
           </div>
