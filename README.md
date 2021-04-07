@@ -1,5 +1,7 @@
 # AstroImageEnhancer
 
+![image](https://user-images.githubusercontent.com/64750210/113849164-1d25ca00-9791-11eb-8a52-cda8e75fdce2.png)
+
 ## Setup
 
 1. Clone or download this respository
