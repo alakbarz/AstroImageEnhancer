@@ -23,6 +23,7 @@ class Image():
     enhanceBackup = "0"
     revert = "0"
     undo = False
+    stack = False
 
 
 @app.route("/")
@@ -78,6 +79,7 @@ def stack():
         stackedImaged = stackImagesECC(files)
         cv2.imwrite(imageDirectory + "/stacked.jpg", stackedImaged)
         Image.filename = f"stack{timestamp}/stacked.jpg"
+        Image.stack = True
 
         return redirect(url_for("upload"))
 
@@ -95,6 +97,7 @@ def upload():
         image.save(f"static/uploads/{Image.filename}")
         shutil.copyfile(
             f"static/uploads/{Image.filename}", f"static/uploads/backup-{Image.filename}")
+        Image.stack = False
         return render_template("index.html", revert=Image.revert, image=Image.filename, brightness=Image.brightness, contrast=Image.contrast, denoise=Image.denoise, enhance=Image.enhance)
     else:
         now = datetime.datetime.now()
@@ -111,10 +114,16 @@ def process():
         Image.denoiseBackup = Image.denoise
         Image.enhanceBackup = Image.enhance
 
-        shutil.copyfile(
-            f"static/uploads/{Image.filename}", f"static/uploads/undo-{Image.filename}")
-        shutil.copyfile(
-            f"static/uploads/backup-{Image.filename}", f"static/uploads/original-{Image.filename}")
+        if Image.stack == True:
+            shutil.copyfile(
+                f"static/uploads/{Image.filename}", f"static/uploads/undo/{Image.filename}")
+            shutil.copyfile(
+                f"static/uploads/backup-{Image.filename}", f"static/uploads/original/{Image.filename}")
+        else:
+            shutil.copyfile(
+                f"static/uploads/{Image.filename}", f"static/uploads/undo-{Image.filename}")
+            shutil.copyfile(
+                f"static/uploads/backup-{Image.filename}", f"static/uploads/original-{Image.filename}")
 
         dateTime = datetime.datetime.now()
 
@@ -164,17 +173,30 @@ def process():
             pass
         elif request.form["sliderStar"] != Image.enhance:
             Image.enhance = request.form["sliderStar"]
-            n = int(Image.enhance)/2
+            n = int(Image.enhance)/5
 
             imgThreshold = cv2.imread(f"static/uploads/{Image.filename}", 0)
-            imgThreshold = cv2.GaussianBlur(imgThreshold, (1, 1), 0)
+            imgThreshold = cv2.GaussianBlur(imgThreshold, (5, 5), 0)
+            cv2.imwrite(f"static/uploads/BLUR.jpg", imgThreshold)
+
+            # input, set value, thresholding algorithm, thresholding type, search radius, subtract value
             threshold = cv2.adaptiveThreshold(
-                imgThreshold, 50, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 2)
+                imgThreshold, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, -2)
+
+            cv2.imwrite(f"static/uploads/THRESHOLD.jpg", threshold)
+
             threshold = cv2.multiply(threshold, np.array(n))
-            threshold = cv2.cvtColor(threshold,cv2.COLOR_GRAY2RGB)
+
+            cv2.imwrite(f"static/uploads/THRESHOLDmult.jpg", threshold)
+
+            threshold = cv2.cvtColor(threshold, cv2.COLOR_GRAY2RGB)
+
+            cv2.imwrite(f"static/uploads/THRESHOLDrgb.jpg", threshold)
 
             img = cv2.imread(f"static/uploads/{Image.filename}")
             img = cv2.add(img, threshold)
+
+            cv2.imwrite(f"static/uploads/ADDED.jpg", img)
 
             # Gaussian blur kernel
             # kernelGaussian = np.array([[ 1, 4, 6, 4, 1],
@@ -186,11 +208,11 @@ def process():
             # img = cv2.filter2D(img, -1, kernelGaussian)
 
             # Unsharp mask kernel
-            kernelUnsharp = np.array([[ 1, 4, 6, 4, 1],
-                                      [ 4,16,24,16, 4],
-                                      [ 6,24, -476,24, 6],
-                                      [ 4,16,24,16, 4],
-                                      [ 1, 4, 6, 4, 1]])
+            kernelUnsharp = np.array([[1, 4, 6, 4, 1],
+                                      [4, 16, 24, 16, 4],
+                                      [6, 24, -476, 24, 6],
+                                      [4, 16, 24, 16, 4],
+                                      [1, 4, 6, 4, 1]])
             kernelUnsharp = kernelUnsharp * (-1/256)
             img = cv2.filter2D(img, -1, kernelUnsharp)
 
@@ -206,8 +228,13 @@ def process():
         return render_template("index.html", dateTime=dateTime, image=Image.filename, brightness=Image.brightness, contrast=Image.contrast, denoise=Image.denoise, enhance=Image.enhance)
 
     if request.method == "GET":
-        shutil.copyfile(
-            f"static/uploads/backup-{Image.filename}", f"static/uploads/{Image.filename}")
+        if Image.stack == False:
+            shutil.copyfile(
+                f"static/uploads/backup-{Image.filename}", f"static/uploads/{Image.filename}")
+        else:
+            shutil.copyfile(
+                f"static/uploads/backup-{Image.filename}", f"static/uploads/original/{Image.filename}")
+
         print("Reverted")
         Image.brightness = "0"
         Image.contrast = "1"
